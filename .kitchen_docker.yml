@@ -1,0 +1,28 @@
+driver:
+  name: docker
+driver_config:
+  image: ubuntu:14.04
+transport:
+  username: kitchen
+
+provisioner:
+  name: chef_zero
+  product_name: chef
+  product_version: 12.17.44
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[couchbase::default]
+    attributes:
+      couchbase:
+        cluster:
+          memory_quota_mb: 256
+          index_quota_mb: 256
+          password: 'secret'
+        server:
+          version: '5.1.1'
+          edition: 'community'

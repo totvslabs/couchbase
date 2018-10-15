@@ -31,14 +31,14 @@ node['couchbase']['buckets'].each do |bucket_name, bucket_config|
   couchbase_bucket bucket_name do
     bucket bucket_name
 
-    type         bucket_config['type'] if bucket_config.has_key?('type')
-    replicas     bucket_config['replicas'] if bucket_config.has_key?('replicas')
-    cluster      bucket_config['cluster'] if bucket_config.has_key?('cluster')
+    type bucket_config['type'] if bucket_config.has_key?('type')
+    replicas bucket_config['replicas'] if bucket_config.has_key?('replicas')
+    authtype bucket_config['authtype'] if bucket_config.has_key?('authtype')
     saslpassword bucket_config['saslpassword'] if bucket_config.has_key?('saslpassword')
-    proxyport    bucket_config['proxyPort'] if bucket_config.has_key?('proxyPort')
+    proxy_port bucket_config['proxy_port'] if bucket_config.has_key?('proxy_port')
     flush_enabled bucket_config['flush_enabled'] if bucket_config.has_key?('flush_enabled')
 
-    memory_quota_mb      bucket_config['memory_quota_mb'] if bucket_config.has_key?('memory_quota_mb')
+    memory_quota_mb bucket_config['memory_quota_mb'] if bucket_config.has_key?('memory_quota_mb')
     memory_quota_percent bucket_config['memory_quota_percent'] if bucket_config.has_key?('memory_quota_percent')
 
     memory_quota_mb 100 unless bucket_config.has_key?('memory_quota_mb') or bucket_config.has_key?('memory_quota_percent')

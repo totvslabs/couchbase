@@ -20,28 +20,32 @@
 # limitations under the License.
 #
 
-# Shamelessly stolen from Opscode's jenkins cookbook. Works for now.
-
-require 'chef/mixin/shell_out'
-require 'chef/rest'
+require 'net/http'
 
 module CouchbaseHelper
-  extend Chef::Mixin::ShellOut
-
   def self.service_listening?(port)
-    netstat_command = "netstat -lnt"
-    cmd = shell_out!(netstat_command)
-    Chef::Log.debug("`#{netstat_command}` returned: \n\n #{cmd.stdout}")
-    cmd.stdout.each_line.select do |l|
-      l.split[3] =~ /#{port}/
-    end.any?
+    begin
+      Timeout.timeout(30) do
+        begin
+          TCPSocket.new('127.0.0.1', port).close
+          return true
+        rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+          return false
+        end
+      end
+      Chef::Log.info 'Connection with couchbase open'
+    rescue
+      Chef::Log.fatal 'Connection with couchbase refused'
+      return false
+    end
   end
 
   def self.endpoint_responding?(url)
-    # XXX Should probably not use Chef::REST for this. Chef::REST only
-    # Accepts application/json; why not just use Net::HTTP directly?
     begin
-      response = Chef::REST::RESTRequest.new(:GET, url, nil).call
+      request = Net::HTTP::Get.new(url)
+      response = Net::HTTP.start(url.host, url.port) do |http|
+        http.request(request)
+      end
     rescue Errno::ECONNREFUSED, Errno::ENETUNREACH
       return false
     end

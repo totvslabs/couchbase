@@ -19,14 +19,6 @@ platforms:
 
 - name: centos-6.5
 
-- name: windows-2012R2
-  transport:
-    name: winrm
-  driver_config:
-    box: win2012r2-datacenter-chef11.16.2
-    vm_hostname: couchbase
-    require_chef_omnibus: false
-
 suites:
 - name: server-community
   run_list:
@@ -84,16 +76,3 @@ suites:
           saslpassword: "mustbedifferent"
           memory_quota_percent: 0.5
           replicas: 1
-
-- name: moxi
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[couchbase::moxi]
-  attributes: {}
-  excludes: ["windows-2012R2"]
-
-- name: client
-  run_list:
-  - recipe[minitest-handler]
-  - recipe[couchbase::client]
-  attributes: {}

@@ -1,6 +1,8 @@
+require 'net/http'
+require 'uri'
+
 module Couchbase
   module Client
-    private
 
     def uri_from_path(path)
       URI.parse("http://localhost:8091#{path}")
@@ -15,7 +17,7 @@ module Couchbase
         http.request request
       end
 
-      Chef::Log.error response.body unless response.kind_of? Net::HTTPSuccess
+      # Chef::Log.error response.body unless response.kind_of? Net::HTTPSuccess
       response
     end
 
@@ -27,7 +29,7 @@ module Couchbase
         http.request request
       end
 
-      Chef::Log.error response.body unless response.kind_of? Net::HTTPSuccess
+      # Chef::Log.error response.body unless response.kind_of? Net::HTTPSuccess
       response
     end
   end

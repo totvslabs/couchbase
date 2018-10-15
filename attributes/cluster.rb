@@ -26,11 +26,13 @@
 
 include_attribute "couchbase::server"
 
-default['couchbase']['cluster'] = Chef::DataBagItem.load('couchbase', 'cluster')[node.chef_environment] rescue {}
+default['couchbase']['cluster'] = Chef::DataBagItem.load('couchbase', 'cluster')[node.chef_environment] rescue {} # ~FC086
 
-node.set['couchbase']['cluster']['name'] = "default" unless node['couchbase']['cluster']['name']
+default['couchbase']['cluster']['name'] = "default" unless node['couchbase']['cluster']['name']
 
 # If this server is a member of a cluster, the cluster settings should override some server settings
-node.set['couchbase']['server']['username'] = node['couchbase']['cluster']['username']
-node.set['couchbase']['server']['password'] = node['couchbase']['cluster']['password']
-node.set['couchbase']['server']['memory_quota_mb'] = node['couchbase']['cluster']['memory_quota_mb']
+node.normal['couchbase']['server']['username'] = node['couchbase']['cluster']['username']
+node.normal['couchbase']['server']['password'] = node['couchbase']['cluster']['password']
+node.normal['couchbase']['server']['memory_quota_mb'] = node['couchbase']['cluster']['memory_quota_mb']
+node.normal['couchbase']['server']['index_quota_mb'] = node['couchbase']['cluster']['index_quota_mb']
+node.normal['couchbase']['server']['services'] = node['couchbase']['cluster']['services']

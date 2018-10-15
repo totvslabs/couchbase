@@ -1,9 +1,8 @@
 #
 # Cookbook Name:: couchbase
-# Recipe:: moxi
-# Author:: Julian C. Dunn (<jdunn@secondmarket.com>)
+# Recipe:: default
 #
-# Copyright 2013, SecondMarket Labs, LLC.
+# Copyright 2012, getaroom
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -24,37 +23,37 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
-# Mutually exclusive with the server recipe. If you have the server on this node you don't need moxi client.
-unless (node['recipes'].include?("couchbase::server"))
 
-  remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['moxi']['package_file']) do
-    source node['couchbase']['moxi']['package_full_url']
-    action :create_if_missing
+# install missing packages
+%w{wget}.each do |x|
+  package x do
+    action :install
+    options "--force-yes"
+    not_if "dpkg -l #{x}"
   end
+end
 
-  case node['platform_family']
-  when "debian"
-    dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['moxi']['package_file'])
-  when "rhel"
-    rpm_package File.join(Chef::Config[:file_cache_path], node['couchbase']['moxi']['package_file'])
-  end
-  
-  service "moxi-server" do
-    supports :restart => true, :status => true
-    action :enable
-  end
+cookbook_file '/etc/apt/sources.list.d/couchbase.list' do
+  source "repo/ubuntu_couchbase.list"
+  mode 0644
+  notifies :run, "execute[apt-key couchbase]", :immediately
+end
 
-  template "/opt/moxi/etc/moxi-cluster.cfg" do
-    source "moxi-cluster.cfg.erb"
-    owner 'moxi'
-    group 'moxi'
-    mode '00644'
-    action :create
-    notifies :restart, "service[moxi-server]"
-  end
+execute "apt-key couchbase" do # ~FC041
+  command "wget -O- https://packages.couchbase.com/ubuntu/couchbase.key | apt-key add -"
+  action :nothing
+end
 
-  service "moxi-server" do
-    action :start
-  end
+# Update system
+execute "apt-get update" do
+  command "apt-get update"
+  action :run
+end
 
+%w{python-httplib2}.each do |x|
+  package x do
+    action :install
+    options "--force-yes"
+    not_if "dpkg -l #{x}"
+  end
 end

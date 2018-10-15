@@ -47,21 +47,6 @@ cluster
 * `node['couchbase']['cluster']['name']`            - The name of the cluster this server belongs to
 * `node['couchbase']['cluster']['memory_quota_mb']` - The per server RAM quota for the entire cluster in megabytes
 
-client
-------
-
-* `node['couchbase']['client']['version']`          - The version of libcouchbase to install
-
-moxi
-----
-
-* `node['couchbase']['moxi']['version']`            - The version of moxi to install
-* `node['couchbase']['moxi']['package_file']`       - The package file to download
-* `node['couchbase']['moxi']['package_base_url']`   - The base URL where the packages are located
-* `node['couchbase']['moxi']['package_full_url']`   - The full URL to the moxi package
-* `node['couchbase']['moxi']['cluster_server']`     - The bootstrap server for moxi to contact for the node list
-* `node['couchbase']['moxi']['cluster_rest_url']`   - The bootstrap server's full REST URL for retrieving the initial node list
-
 buckets
 -------
 
@@ -78,20 +63,10 @@ buckets
 Recipes
 =======
 
-client
-------
-
-Installs the libcouchbase2 and devel packages.
-
 server
 ------
 
 Installs the couchbase-server package and starts the couchbase-server service.
-
-moxi
-----
-
-Installs the moxi-server package and starts the moxi-server service.
 
 buckets
 -------

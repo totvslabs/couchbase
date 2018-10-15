@@ -8,14 +8,13 @@ version          "1.5.0"
 issues_url       "https://github.com/disney/couchbase/issues"
 source_url       "https://github.com/disney/couchbase"
 
-%w{debian ubuntu centos redhat oracle amazon scientific windows}.each do |os|
+%w{debian ubuntu centos redhat oracle amazon scientific}.each do |os|
   supports os
 end
 
-%w{apt openssl windows yum}.each do |d|
+%w{apt openssl yum}.each do |d|
   depends d
 end
 
 recipe "couchbase::server", "Installs couchbase-server"
 recipe "couchbase::client", "Installs libcouchbase"
-recipe "couchbase::moxi", "Installs moxi-server"
