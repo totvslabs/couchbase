@@ -55,10 +55,6 @@ case node['platform_family']
     dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
       notifies :run, "ruby_block[block_until_operational]", :immediately
     end
-  when "rhel"
-    yum_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
-      options node['couchbase']['server']['allow_unsigned_packages'] == true ? "--nogpgcheck" : ""
-    end
 end
 
 ruby_block "block_until_operational" do

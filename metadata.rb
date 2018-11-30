@@ -12,9 +12,8 @@ source_url       "https://github.com/disney/couchbase"
   supports os
 end
 
-%w{apt openssl yum}.each do |d|
+%w{apt openssl}.each do |d|
   depends d
 end
 
-recipe "couchbase::server", "Installs couchbase-server"
-recipe "couchbase::client", "Installs libcouchbase"
+recipe "couchbase::default", "Installs couchbase-server"
