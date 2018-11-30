@@ -32,14 +32,13 @@ server
 * `node['couchbase']['server']['package_full_url']` - The full url to the couchbase-server package file to download and install
 * `node['couchbase']['server']['database_path']`    - The directory Couchbase should persist data to
 * `node['couchbase']['server']['index_path']`       - The directory Couchbase should write indexes to
-* `node['couchbase']['server']['log_dir']`          - The directory Couchbase should log to
-                                                      defaults to Couchbase's maximum allowed value
+* `node['couchbase']['server']['log_dir']`          - The directory Couchbase should log to defaults to Couchbase's maximum allowed value
 * `node['couchbase']['server']['username']`         - The cluster's username for the REST API and Admin UI
 * `node['couchbase']['server']['password']`         - The cluster's password for the REST API and Admin UI
 * `node['couchbase']['server']['allow_unsigned_packages']` - Whether to allow Couchbase's unsigned packages to be installed (default to 'true')
 * `node['couchbase']['server']['community_edition_guid']` - The GUID of community edition of couchbase-server. Default value set
 * `node['couchbase']['server']['enterprise_edition_guid']` - The GUID of enterprise edition of couchbase-server. Default value set
-* `['couchbase']['server']['service_name']` - name of couchbase-server service. Default "couchbase-server"
+* `node['couchbase']['server']['service_name']` - name of couchbase-server service. Default "couchbase-server"
 
 cluster
 ----------------
