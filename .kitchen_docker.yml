@@ -1,17 +1,18 @@
 driver:
   name: docker
 driver_config:
-  image: ubuntu:14.04
+  image: ubuntu:18.04
+  provision_command: mkdir -p /run/sshd
 transport:
   username: kitchen
 
 provisioner:
   name: chef_zero
   product_name: chef
-  product_version: 12.17.44
+  product_version: 14.7.17
 
 platforms:
-  - name: ubuntu-14.04
+  - name: ubuntu-18.04
 
 suites:
   - name: default

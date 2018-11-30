@@ -25,11 +25,9 @@
 #
 
 # install missing packages
-%w{wget}.each do |x|
+%w{wget gnupg2}.each do |x|
   package x do
     action :install
-    options "--force-yes"
-    not_if "dpkg -l #{x}"
   end
 end
 
