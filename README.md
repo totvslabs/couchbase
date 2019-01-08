@@ -1,3 +1,14 @@
+
+This is a fork and has received several updates and cleanups. It now handles
+only what we need.
+
+Documentation is outdated, mosts features don't exist anymore, but, it works
+on chef 14 ¯\\\_(ツ)_/¯
+
+Use it at your own risk.
+
+------
+
 Description
 ===========
 
