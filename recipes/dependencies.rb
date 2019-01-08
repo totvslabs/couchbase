@@ -25,7 +25,7 @@
 #
 
 # install missing packages
-%w{wget gnupg2 python-httplib2}.each do |x|
+%w{wget gnupg2 python-httplib2 libssl1.0.0}.each do |x|
   package x do
     action :install
     options "--force-yes"

@@ -49,12 +49,8 @@ remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['server'
   action :create_if_missing
 end
 
-case node['platform_family']
-  when "debian"
-    package "libssl1.0.0"
-    dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
-      notifies :run, "ruby_block[block_until_operational]", :immediately
-    end
+dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
+  notifies :run, "ruby_block[block_until_operational]", :immediately
 end
 
 ruby_block "block_until_operational" do
