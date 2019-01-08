@@ -27,3 +27,11 @@ suites:
         server:
           version: '5.1.1'
           edition: 'community'
+  - name: install_only
+    run_list:
+      - recipe[couchbase::install_only]
+    attributes:
+      couchbase:
+        server:
+          version: '5.1.1'
+          edition: 'community'
