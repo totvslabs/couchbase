@@ -44,8 +44,6 @@ else
   (node.normal['couchbase']['server']['password'] = secure_password && node.save) unless node['couchbase']['server']['password'] # ~FC075
 end
 
-include_recipe "couchbase::install"
-
 ruby_block "block_until_operational" do
   block do
     Chef::Log.info "Waiting until Couchbase is listening on port #{node['couchbase']['server']['port']}"
