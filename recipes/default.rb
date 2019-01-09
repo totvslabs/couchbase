@@ -25,7 +25,6 @@
 #
 
 include_recipe "couchbase::dependencies"
-include_recipe "couchbase::install"
 include_recipe "couchbase::server"
 include_recipe "couchbase::cluster"
 include_recipe "couchbase::buckets"
