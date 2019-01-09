@@ -51,6 +51,7 @@ end
 
 dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
   notifies :run, "ruby_block[block_until_operational]", :immediately
+  only_if "dpkg -l couchbase-server-#{node['couchbase']['server']['edition'] } | grep -E '^ii'"
 end
 
 ruby_block "block_until_operational" do
