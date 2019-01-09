@@ -44,7 +44,16 @@ else
   (node.normal['couchbase']['server']['password'] = secure_password && node.save) unless node['couchbase']['server']['password'] # ~FC075
 end
 
-include_recipe "couchbase::install"
+remote_file File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
+  source node['couchbase']['server']['package_full_url']
+  action :create_if_missing
+end
+
+dpkg_package File.join(Chef::Config[:file_cache_path], node['couchbase']['server']['package_file']) do
+  action :install
+  not_if "dpkg -l couchbase-server-#{node['couchbase']['server']['edition'] } | grep -E '^ii'"
+  notifies :run, "ruby_block[block_until_operational]", :immediately
+end
 
 ruby_block "block_until_operational" do
   block do
